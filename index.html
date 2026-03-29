@@ -373,7 +373,7 @@ document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
     const r=await fetch('https://api.countapi.xyz/hit/alexandersanchez-portfolio/visits');
     const d=await r.json();
     document.getElementById('visitorBadge').textContent='👀 '+d.value.toLocaleString()+' visitors';
-  }catch(e){document.getElementById('visitorBadge').textContent='👀 Portfolio'}
+  }catch(e){document.getElementById('visitorBadge').textContent = '👀 Welcome!';}
 })();
 
 const projects=[
