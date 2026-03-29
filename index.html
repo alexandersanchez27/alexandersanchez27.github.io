@@ -1,145 +1,449 @@
-<!-- 
-    Name: Alexander Sanchez
-    Assignment: Personal Portfolio Website
-    Course: (Your Course Code)
-    Date: (Submission Date)
--->
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <title>Alexander Sanchez | Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <meta name="description" content="Portfolio website for Alexander Sanchez, Information Technology student.">
-    <link rel="icon" href="images/favicon.png">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexander Sanchez | IT Professional Portfolio</title>
+<meta name="description" content="Alexander Sanchez — IT Systems, Networking & Technical Support professional. York University IT student with hands-on project experience.">
+<meta property="og:title" content="Alexander Sanchez | Portfolio">
+<meta property="og:description" content="IT Systems, Networking & Technical Support. Explore my projects, skills, and experience.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/og-preview.png">
+<meta property="og:url" content="https://alexandersanchez.dev">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="images/favicon.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap');
 
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+[data-theme="light"]{
+  --bg:#fffbeb;--black:#1a1a1a;--card:#fff;
+  --pink:#ff6b9d;--blue:#4ecdc4;--yellow:#ffe66d;
+  --purple:#a855f7;--orange:#ff8a5c;--green:#95e77e;
+  --lime:#c7f464;--sky:#7ec8e3;
+  --text:#1a1a1a;--text2:#555;--text3:#888;
+  --shadow:4px 4px 0 var(--black);--shadow-lg:6px 6px 0 var(--black);--shadow-sm:3px 3px 0 var(--black);
+  --nav-bg:var(--yellow);--footer-bg:var(--yellow);
+  --modal-overlay:rgba(0,0,0,0.5);
+}
+[data-theme="dark"]{
+  --bg:#1a1a2e;--black:#000;--card:#262640;
+  --pink:#ff6b9d;--blue:#4ecdc4;--yellow:#ffe66d;
+  --purple:#a855f7;--orange:#ff8a5c;--green:#95e77e;
+  --lime:#c7f464;--sky:#7ec8e3;
+  --text:#f0f0f0;--text2:#b0b0c0;--text3:#777;
+  --shadow:4px 4px 0 #000;--shadow-lg:6px 6px 0 #000;--shadow-sm:3px 3px 0 #000;
+  --nav-bg:#2a2a45;--footer-bg:#2a2a45;
+  --modal-overlay:rgba(0,0,0,0.7);
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.7;transition:background .4s,color .4s}
+
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--black);border:2px solid var(--bg)}
+
+.page-transition{position:fixed;inset:0;background:var(--yellow);z-index:100000;transform:scaleY(0);transform-origin:bottom;pointer-events:none}
+.page-transition.active{animation:pageWipe .6s ease forwards}
+@keyframes pageWipe{0%{transform:scaleY(0);transform-origin:bottom}50%{transform:scaleY(1);transform-origin:bottom}50.1%{transform-origin:top}100%{transform:scaleY(0);transform-origin:top}}
+
+.navbar{
+  position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.7rem 1.8rem;width:min(94%,1050px);
+  background:var(--nav-bg);border:3px solid var(--black);border-radius:16px;
+  box-shadow:var(--shadow);transition:all .4s;
+}
+.logo{font-size:1.2rem;font-weight:900;letter-spacing:-1px}
+.logo span{display:inline-block;background:var(--black);color:var(--yellow);padding:0 .4rem;border-radius:4px;margin-left:2px;transform:rotate(-2deg)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-links{display:flex;gap:.8rem;align-items:center}
+.nav-links a{color:var(--text);text-decoration:none;font-size:.8rem;font-weight:700;padding:.3rem .6rem;border-radius:8px;border:2px solid transparent;transition:all .15s}
+.nav-links a:hover{border-color:var(--black);background:var(--card);box-shadow:var(--shadow-sm)}
+.theme-toggle{width:36px;height:36px;border-radius:10px;border:3px solid var(--black);background:var(--card);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);transition:all .15s;padding:0}
+.theme-toggle:hover{transform:translateY(2px);box-shadow:1px 1px 0 var(--black)}
+
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;z-index:1001}
+.hamburger span{display:block;width:22px;height:3px;background:var(--black);border-radius:2px;transition:all .3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,6px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-6px)}
+[data-theme="dark"] .hamburger span{background:var(--text)}
+
+.visitor-badge{
+  font-size:.7rem;font-weight:800;padding:.2rem .6rem;
+  background:var(--green);border:2px solid var(--black);border-radius:6px;
+  box-shadow:var(--shadow-sm);white-space:nowrap;color:var(--black);
+}
+
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 2rem;margin-top:-2rem;position:relative;overflow:hidden}
+.shape{position:absolute;border:3px solid var(--black);z-index:0}
+.shape-1{width:80px;height:80px;background:var(--pink);border-radius:50%;top:15%;left:8%;animation:bob 4s ease-in-out infinite}
+.shape-2{width:60px;height:60px;background:var(--blue);top:20%;right:12%;animation:bob 5s ease-in-out infinite .5s}
+.shape-3{width:50px;height:50px;background:var(--green);border-radius:50%;bottom:20%;left:15%;animation:bob 4.5s ease-in-out infinite 1s}
+.shape-4{width:70px;height:70px;background:var(--orange);bottom:25%;right:10%;border-radius:12px;animation:bob 5.5s ease-in-out infinite 1.5s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+
+.hero-content{position:relative;z-index:1}
+.hero h1{font-size:clamp(3rem,8vw,6rem);font-weight:900;letter-spacing:-3px;line-height:.95;margin-bottom:1.2rem}
+.hero h1 .highlight{display:inline-block;background:var(--pink);padding:0 .3em;border:3px solid var(--black);border-radius:8px;box-shadow:var(--shadow);transform:rotate(-1.5deg)}
+
+.typing-wrapper{height:1.8em;margin-bottom:2.5rem;overflow:hidden}
+.typing-text{font-size:clamp(.95rem,1.5vw,1.15rem);font-weight:600;color:var(--text2);border-right:3px solid var(--pink);padding-right:4px;display:inline-block;white-space:nowrap}
+
+.cta-btn{
+  display:inline-block;padding:.9rem 2.5rem;background:var(--blue);color:var(--black);
+  text-decoration:none;font-size:.95rem;font-weight:800;
+  border:3px solid var(--black);border-radius:12px;box-shadow:var(--shadow);transition:all .1s;transform:rotate(1deg);
+}
+.cta-btn:hover{transform:rotate(0deg) translateY(2px);box-shadow:2px 2px 0 var(--black)}
+
+.section{max-width:1050px;margin:0 auto;padding:5rem 2rem;position:relative}
+.section h2{font-size:clamp(2rem,4vw,3rem);font-weight:900;letter-spacing:-1.5px;margin-bottom:2rem}
+.section h2 .badge{display:inline-block;font-size:.7em;padding:0 .4em;border:3px solid var(--black);border-radius:8px;box-shadow:var(--shadow-sm);transform:rotate(-2deg);margin-right:.2em}
+
+.fade-in{opacity:0;transform:translateY(25px);transition:all .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+.about-card{display:grid;grid-template-columns:180px 1fr;gap:2.5rem;align-items:center;padding:2rem;background:var(--card);border:3px solid var(--black);border-radius:20px;box-shadow:var(--shadow-lg)}
+.about-img{width:150px;height:150px;border-radius:16px;object-fit:cover;border:3px solid var(--black);box-shadow:var(--shadow)}
+.about-text{color:var(--text2);font-size:1rem;line-height:1.85;font-weight:500}
+
+.resume-card{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;padding:2rem;background:var(--sky);border:3px solid var(--black);border-radius:16px;box-shadow:var(--shadow)}
+.resume-info h3{font-size:1.2rem;font-weight:800;margin-bottom:.3rem}
+.resume-info p{font-size:.9rem;color:var(--black);opacity:.7;font-weight:500}
+.resume-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 2rem;background:var(--black);color:#fff;text-decoration:none;font-size:.9rem;font-weight:800;border:3px solid var(--black);border-radius:12px;box-shadow:var(--shadow-sm);transition:all .15s}
+.resume-btn:hover{background:var(--yellow);color:var(--black);transform:translateY(2px);box-shadow:1px 1px 0 var(--black)}
+.resume-btn svg{width:18px;height:18px;fill:currentColor}
+
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem}
+.edu-card{padding:1.8rem;border:3px solid var(--black);border-radius:16px;box-shadow:var(--shadow);transition:all .15s}
+.edu-card:hover{transform:translateY(2px);box-shadow:2px 2px 0 var(--black)}
+.edu-card:nth-child(1){background:var(--sky)}
+.edu-card:nth-child(2){background:var(--lime)}
+.edu-card:nth-child(3){background:var(--orange)}
+.edu-card h3{font-size:1.1rem;font-weight:800;margin-bottom:.4rem;color:var(--black)}
+.edu-program{font-size:.88rem;color:var(--black);font-weight:500;opacity:.75;margin-bottom:.4rem}
+.edu-year{display:inline-block;font-size:.75rem;font-weight:800;padding:.2rem .6rem;background:var(--black);color:#fff;border-radius:6px}
+
+.skills-grid{display:flex;flex-wrap:wrap;gap:.7rem}
+.skill-card{padding:.55rem 1.3rem;font-size:.86rem;font-weight:700;color:var(--black);border:2.5px solid var(--black);border-radius:100px;box-shadow:var(--shadow-sm);cursor:default;transition:all .15s}
+.skill-card:hover{transform:translateY(2px);box-shadow:1px 1px 0 var(--black)}
+.skill-card:nth-child(10n+1){background:var(--pink)}
+.skill-card:nth-child(10n+2){background:var(--blue)}
+.skill-card:nth-child(10n+3){background:var(--yellow)}
+.skill-card:nth-child(10n+4){background:var(--green)}
+.skill-card:nth-child(10n+5){background:var(--purple);color:#fff}
+.skill-card:nth-child(10n+6){background:var(--orange)}
+.skill-card:nth-child(10n+7){background:var(--lime)}
+.skill-card:nth-child(10n+8){background:var(--sky)}
+.skill-card:nth-child(10n+9){background:var(--pink)}
+.skill-card:nth-child(10n+10){background:var(--yellow)}
+
+.project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem}
+.project-card{padding:2rem;background:var(--card);border:3px solid var(--black);border-radius:16px;box-shadow:var(--shadow);transition:all .15s}
+.project-card:hover{transform:translateY(3px);box-shadow:2px 2px 0 var(--black)}
+.project-card h3{font-size:1.1rem;font-weight:800;margin-bottom:.7rem}
+.project-card p{color:var(--text2);font-size:.9rem;line-height:1.75;font-weight:500}
+.project-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;flex-wrap:wrap;gap:.5rem}
+.project-tag{display:inline-block;padding:.2rem .7rem;font-size:.72rem;font-weight:800;color:var(--black);border:2px solid var(--black);border-radius:6px;box-shadow:2px 2px 0 var(--black)}
+.project-card:nth-child(1) .project-tag{background:var(--blue)}
+.project-card:nth-child(2) .project-tag{background:var(--yellow)}
+.project-card:nth-child(3) .project-tag{background:var(--pink)}
+.project-card:nth-child(4) .project-tag{background:var(--purple);color:#fff}
+.project-details-btn{font-size:.78rem;font-weight:800;padding:.3rem .8rem;background:var(--black);color:#fff;border:2px solid var(--black);border-radius:8px;cursor:pointer;transition:all .15s;font-family:inherit}
+.project-details-btn:hover{background:var(--yellow);color:var(--black)}
+
+.modal-overlay{position:fixed;inset:0;background:var(--modal-overlay);z-index:10000;display:none;align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(4px)}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:3px solid var(--black);border-radius:20px;box-shadow:var(--shadow-lg);max-width:650px;width:100%;max-height:85vh;overflow-y:auto;padding:2.5rem;position:relative}
+.modal-close{position:absolute;top:1rem;right:1rem;width:36px;height:36px;background:var(--pink);border:3px solid var(--black);border-radius:8px;font-size:1.1rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);transition:all .15s;font-family:inherit;color:var(--black)}
+.modal-close:hover{transform:translateY(2px);box-shadow:1px 1px 0 var(--black)}
+.modal h3{font-size:1.5rem;font-weight:900;margin-bottom:.5rem;padding-right:2.5rem}
+.modal .modal-tag{display:inline-block;padding:.2rem .6rem;font-size:.72rem;font-weight:800;background:var(--blue);border:2px solid var(--black);border-radius:6px;margin-bottom:1rem;color:var(--black)}
+.modal .modal-img{width:100%;border-radius:12px;border:3px solid var(--black);box-shadow:var(--shadow);margin-bottom:1.5rem;background:var(--bg)}
+.modal p{color:var(--text2);font-size:.95rem;line-height:1.85;font-weight:500;margin-bottom:1rem}
+.modal .tech-list{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
+.modal .tech-item{font-size:.75rem;font-weight:700;padding:.2rem .6rem;background:var(--lime);border:2px solid var(--black);border-radius:6px;color:var(--black)}
+
+.contact-form{max-width:580px;margin:0 auto;padding:2.5rem;background:var(--card);border:3px solid var(--black);border-radius:20px;box-shadow:var(--shadow-lg)}
+.form-group{margin-bottom:1.1rem}
+.form-group label{display:block;font-size:.82rem;font-weight:800;margin-bottom:.35rem}
+.form-group input,.form-group textarea{width:100%;padding:.7rem 1rem;font-size:.9rem;font-family:inherit;font-weight:500;background:var(--bg);border:2.5px solid var(--black);border-radius:10px;color:var(--text);outline:none;transition:all .2s}
+.form-group input:focus,.form-group textarea:focus{box-shadow:var(--shadow-sm);transform:translateY(-1px)}
+.form-group textarea{resize:vertical;min-height:110px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.submit-btn{width:100%;padding:.85rem;font-size:.95rem;font-weight:800;font-family:inherit;background:var(--pink);color:var(--black);border:3px solid var(--black);border-radius:12px;box-shadow:var(--shadow);cursor:pointer;transition:all .15s;margin-top:.5rem}
+.submit-btn:hover{transform:translateY(3px);box-shadow:1px 1px 0 var(--black)}
+.form-status{text-align:center;margin-top:1rem;font-size:.85rem;font-weight:700;min-height:1.2em}
+.form-status.success{color:#2a7a3a}
+.form-status.error{color:#cc3333}
+[data-theme="dark"] .form-status.success{color:var(--green)}
+[data-theme="dark"] .form-status.error{color:var(--pink)}
+
+.footer{text-align:center;padding:2rem;font-size:.82rem;font-weight:600;color:var(--text2);border-top:3px solid var(--black);background:var(--footer-bg);transition:all .4s}
+
+@media(max-width:768px){
+  .hamburger{display:flex}
+  .navbar{width:94%;padding:.6rem 1.2rem}
+  .nav-links{position:fixed;top:0;right:-100%;width:75%;height:100vh;flex-direction:column;justify-content:center;background:var(--nav-bg);gap:1.5rem;padding:2rem;transition:right .3s;border-left:3px solid var(--black)}
+  .nav-links.open{right:0}
+  .nav-links a{font-size:1.1rem}
+  .about-card{grid-template-columns:1fr;text-align:center;gap:1.5rem}
+  .about-img{margin:0 auto}
+  .edu-grid,.project-grid{grid-template-columns:1fr}
+  .section{padding:3.5rem 1.2rem}
+  .shape{display:none}
+  .form-row{grid-template-columns:1fr}
+  .resume-card{flex-direction:column;text-align:center}
+  .modal{padding:1.5rem;margin:1rem}
+  .visitor-badge{display:none}
+}
+</style>
+</head>
 <body>
 
-<!-- Navigation -->
-<nav class="navbar">
-    <div class="logo">Alexander</div>
-    <div class="nav-links">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#education">Education</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+<div class="page-transition" id="pageTransition"></div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<nav class="navbar" id="navbar">
+  <div class="logo">Alex<span>S</span></div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  <div class="nav-right">
+    <div class="nav-links" id="navLinks">
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#education" class="nav-link">Education</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#contact" class="nav-link">Contact</a>
     </div>
+    <div class="visitor-badge" id="visitorBadge">👀 --- visitors</div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+  </div>
 </nav>
 
-<!-- Hero Section -->
 <header class="hero" id="home">
-    <div class="hero-content">
-        <h1>Alexander Sanchez</h1>
-        <p class="subtitle">IT Systems • Networking • Technical Support</p>
-        <a href="#projects" class="cta-btn">View My Work</a>
+  <div class="shape shape-1"></div><div class="shape shape-2"></div>
+  <div class="shape shape-3"></div><div class="shape shape-4"></div>
+  <div class="hero-content fade-in">
+    <h1>Alexander<br><span class="highlight">Sanchez</span></h1>
+    <div class="typing-wrapper">
+      <span class="typing-text" id="typingText"></span>
     </div>
+    <a href="#projects" class="cta-btn nav-link">View My Work ✦</a>
+  </div>
 </header>
 
-<!-- About Section -->
 <section id="about" class="section">
-    <h2>About Me</h2>
-
-    <!-- Required IMAGE Tag (for assignment) -->
-    <img src="images/profile.png" alt="Portfolio decorative graphic" class="about-img">
-
-    <p>
-        I am an Information Technology student who focuses on networking, system administration, 
-        and technical support. I enjoy building practical projects, working with hardware such as 
-        Raspberry Pi devices, and learning how systems behave under different configurations.
-        My goal is to develop a strong career in IT support or systems roles while continuing 
-        to grow through hands-on work and real-world experience.
-    </p>
+  <h2 class="fade-in"><span class="badge" style="background:var(--blue)">👋</span> About Me</h2>
+  <div class="about-card fade-in">
+    <img src="images/profile.png" alt="Alexander Sanchez" class="about-img">
+    <p class="about-text">I am an Information Technology student who focuses on networking, system administration, and technical support. I enjoy building practical projects, working with hardware such as Raspberry Pi devices, and learning how systems behave under different configurations. My goal is to develop a strong career in IT support or systems roles while continuing to grow through hands-on work and real-world experience.</p>
+  </div>
 </section>
 
-<!-- Education Section -->
+<section id="resume" class="section" style="padding-top:0">
+  <div class="resume-card fade-in">
+    <div class="resume-info">
+      <h3>📄 Download My Resume</h3>
+      <p>View my full experience, certifications, and qualifications.</p>
+    </div>
+    <a href="resume/resume.html" target="_blank" class="resume-btn">
+      <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4h14v-2H5v2z"/></svg>
+      View Resume
+    </a>
+  </div>
+</section>
+
 <section id="education" class="section">
-    <h2>Education</h2>
-
-    <div class="edu-grid">
-
-        <div class="edu-card">
-            <h3>York University</h3>
-            <p class="edu-program">BA Information Technology (Honours)</p>
-            <p class="edu-year">2025 – Present</p>
-        </div>
-
-        <div class="edu-card">
-            <h3>George Brown College</h3>
-            <p class="edu-program">Computer Systems Technology – Systems Specialization (Advanced Diploma)</p>
-            <p class="edu-year">2022 – 2025</p>
-        </div>
-
-        <div class="edu-card">
-            <h3>George Brown College</h3>
-            <p class="edu-program">Computer Systems Technician (Diploma)</p>
-            <p class="edu-year">2020 – 2022</p>
-        </div>
-
-    </div>
+  <h2 class="fade-in"><span class="badge" style="background:var(--lime)">🎓</span> Education</h2>
+  <div class="edu-grid">
+    <div class="edu-card fade-in"><h3>York University</h3><p class="edu-program">BA Information Technology (Honours)</p><span class="edu-year">2025 – Present</span></div>
+    <div class="edu-card fade-in"><h3>George Brown College</h3><p class="edu-program">Computer Systems Technology – Systems Specialization</p><span class="edu-year">2022 – 2025</span></div>
+    <div class="edu-card fade-in"><h3>George Brown College</h3><p class="edu-program">Computer Systems Technician (Diploma)</p><span class="edu-year">2020 – 2022</span></div>
+  </div>
 </section>
 
-<!-- Skills Section -->
 <section id="skills" class="section">
-    <h2>Skills</h2>
-
-    <div class="skills-grid">
-        <div class="skill-card">Networking Fundamentals</div>
-        <div class="skill-card">IT Support & Troubleshooting</div>
-        <div class="skill-card">Java Programming</div>
-        <div class="skill-card">Linux & Raspberry Pi</div>
-        <div class="skill-card">System Configuration</div>
-        <div class="skill-card">Data Analysis & Statistics</div>
-        <div class="skill-card">HTML, CSS, JavaScript, Bash</div>
-    </div>
-
-    <!-- Required LIST element (assignment + lecture requirement) -->
-    <ul class="skills-list">
-        <li>Experienced with computer hardware</li>
-        <li>Comfortable with command-line environments</li>
-        <li>Strong analytical and troubleshooting mindset</li>
-    </ul>
-
+  <h2 class="fade-in"><span class="badge" style="background:var(--yellow)">⚡</span> Skills</h2>
+  <div class="skills-grid fade-in">
+    <div class="skill-card">Networking Fundamentals</div>
+    <div class="skill-card">IT Support & Troubleshooting</div>
+    <div class="skill-card">Java Programming</div>
+    <div class="skill-card">Linux & Raspberry Pi</div>
+    <div class="skill-card">System Configuration</div>
+    <div class="skill-card">Data Analysis & Statistics</div>
+    <div class="skill-card">HTML, CSS, JavaScript, Bash</div>
+    <div class="skill-card">Computer Hardware</div>
+    <div class="skill-card">Command-Line Environments</div>
+    <div class="skill-card">Analytical & Troubleshooting Mindset</div>
+  </div>
 </section>
 
-<!-- Projects Section -->
 <section id="projects" class="section">
-    <h2>Projects</h2>
-
-    <div class="project-grid">
-
-        <div class="project-card">
-            <h3>Raspberry Pi Travel Router</h3>
-            <p>Portable router with VPN configured using RaspAP and WireGuard. Designed for secure travel and better privacy on public Wi-Fi.</p>
-        </div>
-
-        <div class="project-card">
-            <h3>Java Mood Tracker</h3>
-            <p>Simple mood tracking application written in Java using loops, conditionals, and text file storage.</p>
-        </div>
-
-        <div class="project-card">
-            <h3>IT Support Labs</h3>
-            <p>Hands-on troubleshooting, networking labs, command-line tasks, and system configuration practice.</p>
-        </div>
-
+  <h2 class="fade-in"><span class="badge" style="background:var(--pink)">🚀</span> Projects</h2>
+  <div class="project-grid">
+    <div class="project-card fade-in">
+      <h3>Raspberry Pi Travel Router</h3>
+      <p>Portable router with VPN configured using RaspAP and WireGuard for secure travel.</p>
+      <div class="project-footer"><span class="project-tag">Networking</span><button class="project-details-btn" onclick="openModal(0)">Details →</button></div>
     </div>
+    <div class="project-card fade-in">
+      <h3>Java Mood Tracker</h3>
+      <p>Mood tracking app written in Java using loops, conditionals, and file storage.</p>
+      <div class="project-footer"><span class="project-tag">Java</span><button class="project-details-btn" onclick="openModal(1)">Details →</button></div>
+    </div>
+    <div class="project-card fade-in">
+      <h3>IT Support Labs</h3>
+      <p>Hands-on troubleshooting, networking labs, and system configuration practice.</p>
+      <div class="project-footer"><span class="project-tag">IT Support</span><button class="project-details-btn" onclick="openModal(2)">Details →</button></div>
+    </div>
+    <div class="project-card fade-in">
+      <h3>Proxmox Home Server</h3>
+      <p>Virtualized home lab running Ubuntu Server VMs with Docker, game servers, media services, and automated workflows.</p>
+      <div class="project-footer"><span class="project-tag">Infrastructure</span><button class="project-details-btn" onclick="openModal(3)">Details →</button></div>
+    </div>
+  </div>
 </section>
 
-<!-- Contact Section -->
 <section id="contact" class="section">
-    <h2>Contact</h2>
-    <p>You can reach me at:</p>
-    <p><a href="mailto:alex.anaya27@gmail.com" class="email-link">alex.anaya27@gmail.com</a></p>
+  <h2 class="fade-in"><span class="badge" style="background:var(--purple);color:#fff">💬</span> Contact</h2>
+  <div class="contact-form fade-in">
+    <div class="form-row">
+      <div class="form-group"><label for="name">Name</label><input type="text" id="name" placeholder="Your name" required></div>
+      <div class="form-group"><label for="email">Email</label><input type="email" id="email" placeholder="you@example.com" required></div>
+    </div>
+    <div class="form-group"><label for="subject">Subject</label><input type="text" id="subject" placeholder="What's this about?"></div>
+    <div class="form-group"><label for="message">Message</label><textarea id="message" placeholder="Your message..." required></textarea></div>
+    <button class="submit-btn" id="submitBtn">Send Message ♥</button>
+    <div class="form-status" id="formStatus"></div>
+  </div>
 </section>
 
-<!-- Footer -->
-<footer class="footer">
-    © 2025 Alexander Sanchez | All Rights Reserved
-</footer>
+<footer class="footer">© 2025 Alexander Sanchez · Made with ♥ · All Rights Reserved</footer>
 
+<script>
+const pt=document.getElementById('pageTransition');
+document.querySelectorAll('.nav-link').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();const href=a.getAttribute('href');
+    pt.classList.add('active');
+    setTimeout(()=>{document.querySelector(href)?.scrollIntoView({behavior:'auto'});pt.classList.remove('active')},300);
+    hamburger.classList.remove('active');navLinks.classList.remove('open');
+  });
+});
+
+const toggle=document.getElementById('themeToggle'),html=document.documentElement;
+toggle.addEventListener('click',()=>{
+  const isLight=html.getAttribute('data-theme')==='light';
+  html.setAttribute('data-theme',isLight?'dark':'light');
+  toggle.textContent=isLight?'🌙':'☀️';
+});
+
+const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
+hamburger.addEventListener('click',()=>{hamburger.classList.toggle('active');navLinks.classList.toggle('open')});
+
+const roles=['IT Student','Aspiring Systems Administrator','Networking Learner','Homelab Builder','Hands-On Problem Solver', 'Junior Programmer'];
+let ri=0,ci=0,deleting=false;
+const typingEl=document.getElementById('typingText');
+function typeLoop(){
+  const word=roles[ri];
+  if(!deleting){typingEl.textContent=word.substring(0,ci+1);ci++;if(ci===word.length){deleting=true;setTimeout(typeLoop,2000);return}}
+  else{typingEl.textContent=word.substring(0,ci-1);ci--;if(ci===0){deleting=false;ri=(ri+1)%roles.length}}
+  setTimeout(typeLoop,deleting?40:80);
+}
+typeLoop();
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+
+(async()=>{
+  try{
+    const r=await fetch('https://api.countapi.xyz/hit/alexandersanchez-portfolio/visits');
+    const d=await r.json();
+    document.getElementById('visitorBadge').textContent='👀 '+d.value.toLocaleString()+' visitors';
+  }catch(e){document.getElementById('visitorBadge').textContent='👀 Portfolio'}
+})();
+
+const projects=[
+  {
+    title:'Raspberry Pi Travel Router',tag:'Networking',tagColor:'var(--blue)',
+    img:'images/project-router.png',
+    desc:'A portable travel router built on a Raspberry Pi that creates a secure Wi-Fi hotspot with built-in VPN protection. Connected devices route all traffic through an encrypted WireGuard tunnel, protecting data on untrusted networks like hotel and airport Wi-Fi.',
+    details:'The router runs RaspAP for access point management and WireGuard for the VPN tunnel. It supports automatic failover, DNS-over-HTTPS for additional privacy, and can be configured remotely via a web dashboard. The entire setup fits in a pocket-sized enclosure.',
+    tech:['Raspberry Pi','RaspAP','WireGuard','Linux','Networking','DNS','DHCP']
+  },
+  {
+    title:'Java Mood Tracker',tag:'Java',tagColor:'var(--yellow)',
+    img:'images/project-mood.png',
+    desc:'A command-line mood tracking application that lets users log daily mood entries, view historical data, and identify patterns over time. Data is stored persistently in text files.',
+    details:'Built with core Java using object-oriented principles. Implements file I/O for persistent storage, input validation, date handling, and basic statistics to show mood trends. The project demonstrates clean code structure with separate classes for data models, file handling, and user interface.',
+    tech:['Java','OOP','File I/O','Data Structures','CLI']
+  },
+  {
+    title:'IT Support Labs',tag:'IT Support',tagColor:'var(--pink)',
+    img:'images/project-labs.png',
+    desc:'A collection of hands-on labs covering real-world IT support scenarios including hardware troubleshooting, network configuration, and system administration tasks.',
+    details:'Labs include Active Directory management, Group Policy configuration, network troubleshooting with Wireshark, disk imaging and deployment, remote desktop setup, and printer management. Each lab documents the problem, methodology, and solution.',
+    tech:['Active Directory','Wireshark','Group Policy','Windows Server','TCP/IP','Troubleshooting']
+  },
+  {
+    title:'Proxmox Home Server',tag:'Infrastructure',tagColor:'var(--purple)',
+    img:'images/project-homeserver.png',
+    desc:'Built a home lab on Proxmox VE, running Ubuntu Server virtual machines to host multiple services including a Dockerized media platform, a Minecraft game server, and automated data workflows — all managed and maintained through the command line.',
+    details:'Set up Proxmox VE as a Type 1 hypervisor to manage multiple Ubuntu Server VMs on dedicated hardware. One VM runs a Dockerized media stack with 8+ containerized services including a streaming server, request management, automation agents, and download clients with automated file processing and organized storage on mounted external drives. A second VM hosts a Fabric-based game server managed with systemd, featuring persistent world data separated from application files using symbolic links, a full backup and restore strategy, and crash recovery workflows. Diagnosed and resolved real-world issues across the stack including container port conflicts (using ss -ltnp), corrupted packages, service startup failures, file permission errors, and server performance degradation through live log analysis with journalctl. Configured secure remote access via tunneling without direct router control.',
+    tech:['Proxmox VE','Ubuntu Server','Docker','systemd','Bash','Symbolic Links','journalctl','Container Networking','Backup & Recovery','Port Management','SSL','Tunneling','Log Analysis']
+  }
+];
+const overlay=document.getElementById('modalOverlay'),modalBody=document.getElementById('modalBody');
+function openModal(i){
+  const p=projects[i];
+  modalBody.innerHTML=`
+    <h3>${p.title}</h3>
+    <span class="modal-tag" style="background:${p.tagColor}">${p.tag}</span>
+    <div class="modal-img" style="height:200px;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--text3);font-weight:600">📸 Project Screenshot</div>
+    <p>${p.desc}</p>
+    <p>${p.details}</p>
+    <p style="font-weight:700;margin-bottom:.4rem;color:var(--text)">Technologies Used:</p>
+    <div class="tech-list">${p.tech.map(t=>`<span class="tech-item">${t}</span>`).join('')}</div>
+  `;
+  overlay.classList.add('active');document.body.style.overflow='hidden';
+}
+document.getElementById('modalClose').addEventListener('click',()=>{overlay.classList.remove('active');document.body.style.overflow=''});
+overlay.addEventListener('click',e=>{if(e.target===overlay){overlay.classList.remove('active');document.body.style.overflow=''}});
+
+const submitBtn=document.getElementById('submitBtn'),formStatus=document.getElementById('formStatus');
+submitBtn.addEventListener('click',async()=>{
+  const name=document.getElementById('name').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const subject=document.getElementById('subject').value.trim();
+  const message=document.getElementById('message').value.trim();
+  if(!name||!email||!message){formStatus.textContent='Please fill in all required fields!';formStatus.className='form-status error';return}
+  submitBtn.textContent='Sending...';submitBtn.disabled=true;
+  try{
+    const res=await fetch('https://formspree.io/f/xzdkeryq',{
+      method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({name,email,subject,message})
+    });
+    if(res.ok){
+      formStatus.textContent='Message sent! I\'ll get back to you soon ♥';formStatus.className='form-status success';
+      document.getElementById('name').value='';document.getElementById('email').value='';
+      document.getElementById('subject').value='';document.getElementById('message').value='';
+    }else{formStatus.textContent='Oops! Something went wrong.';formStatus.className='form-status error'}
+  }catch(e){formStatus.textContent='Network error. Please try again!';formStatus.className='form-status error'}
+  submitBtn.textContent='Send Message ♥';submitBtn.disabled=false;
+});
+</script>
 </body>
 </html>
